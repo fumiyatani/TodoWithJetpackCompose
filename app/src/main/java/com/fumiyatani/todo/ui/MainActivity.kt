@@ -4,18 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.fumiyatani.todo.model.Task
-import com.fumiyatani.todo.ui.screen.TaskListScreen
-import com.fumiyatani.todo.ui.screen.TodoRow
+import com.fumiyatani.todo.ui.tasks.TaskListScreen
+import com.fumiyatani.todo.ui.tasks.TodoRow
 import com.fumiyatani.todo.ui.theme.TodoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -35,15 +37,13 @@ fun DefaultPreview() {
     TodoTheme {
         Column {
             TodoRow(
-                task = Task(title = "タイトル", detail = "TODOの詳細", isCompleted = false)
-            ) { isCompleted: Boolean, task: Task ->
-
-            }
+                task = Task(title = "タイトル", detail = "TODOの詳細", isCompleted = false),
+                onCheckedChange = { _, _ -> },
+            )
             TodoRow(
-                task = Task(title = "タイトル", detail = "TODOの詳細", isCompleted = true)
-            ) { isCompleted: Boolean, task: Task ->
-
-            }
+                task = Task(title = "タイトル", detail = "TODOの詳細", isCompleted = true),
+                onCheckedChange = { _, _ -> },
+            )
         }
     }
 }
