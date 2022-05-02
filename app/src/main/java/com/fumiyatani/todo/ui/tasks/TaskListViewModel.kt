@@ -1,6 +1,5 @@
-package com.fumiyatani.todo.ui.screen
+package com.fumiyatani.todo.ui.tasks
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,7 +24,8 @@ class TaskListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             if (_uiState.value != null) {
-                _uiState.value = _uiState.value!!.copy(tasks = getTasksUseCase())
+                val tasks = getTasksUseCase()
+                _uiState.value = _uiState.value!!.copy(tasks = tasks)
             }
         }
     }
@@ -43,7 +43,8 @@ class TaskListViewModel @Inject constructor(
             createTaskUseCase(task)
             if (_uiState.value != null) {
                 val uiState = _uiState.value!!
-                _uiState.value = uiState.copy(tasks = getTasksUseCase())
+                val tasks = getTasksUseCase()
+                _uiState.value = uiState.copy(tasks = tasks)
             }
         }
     }
@@ -54,7 +55,8 @@ class TaskListViewModel @Inject constructor(
             completeTaskUseCase(finishedTask)
             if (_uiState.value != null) {
                 val uiState = _uiState.value!!
-                _uiState.value = uiState.copy(tasks = getTasksUseCase())
+                val tasks = getTasksUseCase()
+                _uiState.value = uiState.copy(tasks = tasks)
             }
         }
     }
@@ -65,12 +67,39 @@ class TaskListViewModel @Inject constructor(
             completeTaskUseCase(finishedTask)
             if (_uiState.value != null) {
                 val uiState = _uiState.value!!
-                _uiState.value = uiState.copy(tasks = getTasksUseCase())
+                val tasks = getTasksUseCase()
+                _uiState.value = uiState.copy(tasks = tasks)
+            }
+        }
+    }
+
+    fun onSelectedDisplayMode(displayMode: DisplayMode) {
+        viewModelScope.launch {
+            if (_uiState.value != null) {
+                val tasks = getTasksUseCase()
+                    .filter { task ->
+                        when (displayMode) {
+                            DisplayMode.Finish -> task.isCompleted
+                            DisplayMode.Unfinished -> !task.isCompleted
+                            DisplayMode.ALL -> true
+                        }
+                    }
+                _uiState.value = TaskListState(
+                    tasks = tasks,
+                    displayMode = displayMode
+                )
             }
         }
     }
 }
 
 data class TaskListState(
-    val tasks: List<Task> = emptyList()
+    val tasks: List<Task> = emptyList(),
+    val displayMode: DisplayMode = DisplayMode.ALL
 )
+
+enum class DisplayMode {
+    Finish,
+    Unfinished,
+    ALL
+}
