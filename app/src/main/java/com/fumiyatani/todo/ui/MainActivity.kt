@@ -9,9 +9,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.fumiyatani.todo.model.Task
+import com.fumiyatani.todo.ui.component.TodoTopAppBar
+import com.fumiyatani.todo.ui.tasks.DisplayMode
 import com.fumiyatani.todo.ui.tasks.TaskListScreen
-import com.fumiyatani.todo.ui.tasks.TodoRow
 import com.fumiyatani.todo.ui.theme.TodoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,13 +36,10 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
     TodoTheme {
         Column {
-            TodoRow(
-                task = Task(title = "タイトル", detail = "TODOの詳細", isCompleted = false),
-                onCheckedChange = { _, _ -> },
-            )
-            TodoRow(
-                task = Task(title = "タイトル", detail = "TODOの詳細", isCompleted = true),
-                onCheckedChange = { _, _ -> },
+            TodoTopAppBar(
+                title = "テスト",
+                onClickMenuIcon = {},
+                checkedDisplayMode = DisplayMode.ALL
             )
         }
     }

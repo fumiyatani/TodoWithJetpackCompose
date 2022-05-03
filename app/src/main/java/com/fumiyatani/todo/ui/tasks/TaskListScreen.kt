@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fumiyatani.todo.model.Task
-import com.fumiyatani.todo.ui.screen.TaskListViewModel
+import com.fumiyatani.todo.ui.component.TodoTopAppBar
 
 @ExperimentalMaterialApi
 @Composable
@@ -24,8 +24,19 @@ fun TaskListScreen(viewModel: TaskListViewModel = viewModel()) {
     val titleTextState = remember { mutableStateOf(TextFieldValue()) }
     val detailTextState = remember { mutableStateOf(TextFieldValue()) }
     val openBottomSheet = remember { mutableStateOf(false) }
+    val checkedDisplayModeState = viewModel.uiState.observeAsState().value?.displayMode ?: DisplayMode.ALL
+    val tasksState = viewModel.uiState.observeAsState().value?.tasks ?: emptyList()
 
     Scaffold(
+        topBar = {
+            TodoTopAppBar(
+                title = "タスク管理",
+                onClickMenuIcon = { displayMode ->
+                    viewModel.onSelectedDisplayMode(displayMode)
+                },
+                checkedDisplayMode = checkedDisplayModeState
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { openBottomSheet.value = true }
@@ -35,7 +46,7 @@ fun TaskListScreen(viewModel: TaskListViewModel = viewModel()) {
         }
     ) {
         TaskContent(
-            tasks = viewModel.uiState.observeAsState().value?.tasks ?: emptyList(),
+            tasks = tasksState,
             onCheckedChange = { isCompleted, task ->
                 if (isCompleted) {
                     viewModel.onFinishedTask(task)
