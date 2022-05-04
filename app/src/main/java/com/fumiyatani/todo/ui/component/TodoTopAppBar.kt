@@ -9,11 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.fumiyatani.todo.R
+import com.fumiyatani.todo.model.Task
 import com.fumiyatani.todo.ui.tasks.DisplayMode
 
 @Composable
 fun TodoTopAppBar(
-    title: String = "タスク管理",
+    title: String,
     onClickMenuIcon: (DisplayMode) -> Unit,
     checkedDisplayMode: DisplayMode,
 ) {
@@ -48,7 +51,7 @@ fun TodoTopAppBar(
                     ) {
                         Text(
                             modifier = Modifier,
-                            text = "全て"
+                            text = stringResource(R.string.label_all_display_mode_menu_item)
                         )
                         if (checkedDisplayMode == DisplayMode.ALL) {
                             Icon(imageVector = Icons.Default.Check, contentDescription = null)
@@ -62,7 +65,7 @@ fun TodoTopAppBar(
                     ) {
                         Text(
                             modifier = Modifier,
-                            text = "未完了"
+                            text = stringResource(R.string.label_unfinished_display_mode_menu_item)
                         )
                         if (checkedDisplayMode == DisplayMode.Unfinished) {
                             Icon(imageVector = Icons.Default.Check, contentDescription = null)
@@ -76,7 +79,7 @@ fun TodoTopAppBar(
                     ) {
                         Text(
                             modifier = Modifier,
-                            text = "完了"
+                            text = stringResource(R.string.label_finish_display_mode_menu_item)
                         )
                         if (checkedDisplayMode == DisplayMode.Finish) {
                             Icon(imageVector = Icons.Default.Check, contentDescription = null)

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Todo</string>
+    <string name="label_task_top_app_bar_title">タスク管理</string>
+    <string name="label_all_display_mode_menu_item">"全て"</string>
+    <string name="label_unfinished_display_mode_menu_item">"未完了"</string>
+    <string name="label_finish_display_mode_menu_item">"完了"</string>
 </resources>
