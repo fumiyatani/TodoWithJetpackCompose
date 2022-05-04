@@ -12,9 +12,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.fumiyatani.todo.R
 import com.fumiyatani.todo.model.Task
 import com.fumiyatani.todo.ui.component.TodoTopAppBar
 
@@ -30,7 +32,7 @@ fun TaskListScreen(viewModel: TaskListViewModel = viewModel()) {
     Scaffold(
         topBar = {
             TodoTopAppBar(
-                title = "タスク管理",
+                title = stringResource(id = R.string.label_task_top_app_bar_title),
                 onClickMenuIcon = { displayMode ->
                     viewModel.onSelectedDisplayMode(displayMode)
                 },
